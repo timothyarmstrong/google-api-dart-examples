@@ -1,12 +1,16 @@
-import 'dart:async';
 import 'dart:html';
 
-import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as API;
 import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
-Future<List<API.File>> retrieveAllFiles(API.Drive driveApi) {
+// START EXAMPLE
+
+import 'dart:async';
+import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
+
+// Retrieve a list of File resources.
+Future<List<DriveApi.File>> retrieveAllFiles(DriveApi.Drive service) {
   var completer = new Completer();
-  List<API.File> files = [];
+  List<DriveApi.File> files = [];
 
   void retrievePageOfFiles(request) {
     request
@@ -17,7 +21,7 @@ Future<List<API.File>> retrieveAllFiles(API.Drive driveApi) {
         if (list.nextPageToken == null) {
           completer.complete(files);
         } else {
-          var request = driveApi.files.list(pageToken: list.nextPageToken);
+          var request = service.files.list(pageToken: list.nextPageToken);
           retrievePageOfFiles(request);
         }
       })
@@ -26,23 +30,25 @@ Future<List<API.File>> retrieveAllFiles(API.Drive driveApi) {
       });
   }
 
-  var initialRequest = driveApi.files.list();
+  var initialRequest = service.files.list();
   retrievePageOfFiles(initialRequest);
 
   return completer.future;
 }
 
+// END EXAMPLE
+
 void main() {
   var clientId = '938589624680.apps.googleusercontent.com';
-  var scopes = [API.Drive.DRIVE_FILE_SCOPE, API.Drive.DRIVE_SCOPE];
+  var scopes = [DriveApi.Drive.DRIVE_FILE_SCOPE, DriveApi.Drive.DRIVE_SCOPE];
   
   var auth = new GoogleOAuth2(clientId, scopes);
   
-  var driveApi = new API.Drive(auth);
-  driveApi.makeAuthRequests = true;
+  var service = new DriveApi.Drive(auth);
+  service.makeAuthRequests = true;
 
   auth.login().then((Token t) {
-    retrieveAllFiles(driveApi)
+    retrieveAllFiles(service)
       .then((files) {
         for (var f in files) {
           print(f.title);

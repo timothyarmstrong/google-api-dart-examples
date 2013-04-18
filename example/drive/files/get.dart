@@ -1,11 +1,14 @@
-import 'dart:async';
 import 'dart:html';
 
-import 'package:google_api_drive_v2/drive_v2_api_browser.dart';
-import 'package:google_oauth2_client/google_oauth2_browser.dart';
+// START EXAMPLE
 
-void printFile(DriveApi driveApi, fileId) {
-  driveApi.files.get(fileId)
+import 'dart:async';
+import 'package:google_oauth2_client/google_oauth2_browser.dart';
+import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
+
+// Print a file's metadata.
+void printFile(DriveApi.Drive service, fileId) {
+  service.files.get(fileId)
     .then((file) {
       print('Title: ${file.title}');
       print('Description: ${file.description}');
@@ -16,7 +19,8 @@ void printFile(DriveApi driveApi, fileId) {
     });
 }
 
-Future<String> downloadFile(driveApi, auth, file) {
+// Download a file's content.
+Future<String> downloadFile(DriveApi.Drive service, GoogleOAuth2 auth, File file) {
   var completer = new Completer();
   var downloadUrl = file.downloadUrl;
   if (downloadUrl != null) {
@@ -35,24 +39,26 @@ Future<String> downloadFile(driveApi, auth, file) {
   return completer.future;
 }
 
+// END EXAMPLE
+
 void main() {
   var clientId = '938589624680.apps.googleusercontent.com';
-  var scopes = [DriveApi.DRIVE_READONLY_SCOPE];
+  var scopes = [DriveApi.Drive.DRIVE_READONLY_SCOPE];
   
   var auth = new GoogleOAuth2(clientId, scopes);
   
-  var driveApi = new DriveApi(auth);
-  driveApi.makeAuthRequests = true;
+  var service = new DriveApi.Drive(auth);
+  service.makeAuthRequests = true;
 
   auth.login().then((Token t) {
-    var l = driveApi.files.list(maxResults: 1, q: 'title = "document.txt"');
+    var l = service.files.list(maxResults: 1, q: 'title = "document.txt"');
     l.then((list) {
       var items = list.items;
       if (items.length > 0) {
-        printFile(driveApi, items[0].id);
+        printFile(service, items[0].id);
 
-        driveApi.files.get(items[0].id).then((file) {
-          downloadFile(driveApi, auth, file).then((content) {
+        service.files.get(items[0].id).then((file) {
+          downloadFile(service, auth, file).then((content) {
             print(content);
           });
         });
