@@ -6,10 +6,6 @@ import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
 // newRole: "owner", "writer", "reader".
 void updatePermission(API.Drive driveApi, String fileId, String permissionId, String newRole) {
-  var patchedPermission = new API.Permission.fromJson({
-    'role': newRole
-  });
-
   // First retrieve the permission from the API.
   driveApi.permissions.get(fileId, permissionId)
     .then((permission) {

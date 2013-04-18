@@ -1,7 +1,7 @@
 name: api-docs
 dependencies:
-  google_drive_v2_api:
-    path: /Users/timarmstrong/code/discovery_api_dart_client_generator/output/dart_drive_v2_api_client
+  google_drive_v2_api: any
+    #path: /Users/timarmstrong/code/discovery_api_dart_client_generator/output/dart_drive_v2_api_client
   #google_api_drive_v2:
     #path: /Users/timarmstrong/code/drive-api/drive-api/google_api_drive_v2
   browser: any
