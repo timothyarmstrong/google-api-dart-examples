@@ -7,7 +7,7 @@ import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Rename a file.
+/// Rename a file.
 void renameFile(DriveApi.Drive service, fileId, newTitle) {
   var f = new DriveApi.File.fromJson({
     'title': newTitle

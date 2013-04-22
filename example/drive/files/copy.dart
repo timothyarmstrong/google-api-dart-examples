@@ -6,7 +6,7 @@ import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Copy an existing file.
+/// Copy an existing file.
 void copyFile(DriveApi.Drive service, String fileId, String copyTitle) {
   var file = new DriveApi.File.fromJson({
     'title': copyTitle

@@ -6,7 +6,7 @@ import 'dart:async';
 import 'dart:html';
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Update an existing file's metadata and content.
+/// Update an existing file's metadata and content.
 Future<DriveApi.File> updateFile(DriveApi.Drive service, String fileId, String newTitle, String newDescription, String newMimeType, String newContent, bool newRevision) {
   var completer = new Completer();
 

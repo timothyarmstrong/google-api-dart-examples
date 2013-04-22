@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:google_oauth2_client/google_oauth2_browser.dart';
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Print a file's metadata.
+/// Print a file's metadata.
 void printFile(DriveApi.Drive service, fileId) {
   service.files.get(fileId)
     .then((file) {
@@ -19,7 +19,7 @@ void printFile(DriveApi.Drive service, fileId) {
     });
 }
 
-// Download a file's content.
+/// Download a file's content.
 Future<String> downloadFile(DriveApi.Drive service, GoogleOAuth2 auth, File file) {
   var completer = new Completer();
   var downloadUrl = file.downloadUrl;

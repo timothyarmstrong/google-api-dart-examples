@@ -7,7 +7,7 @@ import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Restore a file from the trash.
+/// Restore a file from the trash.
 void restoreFile(DriveApi.Drive service, String fileId) {
   service.files.untrash(fileId)
     .then((_) {

@@ -7,7 +7,7 @@ import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Move a file to the trash.
+/// Move a file to the trash.
 void trashFile(DriveApi.Drive service, String fileId) {
   service.files.trash(fileId)
     .then((_) {

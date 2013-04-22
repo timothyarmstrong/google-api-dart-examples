@@ -6,7 +6,7 @@ import 'dart:async';
 import 'dart:html';
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Insert a new file.
+/// Insert a new file.
 Future<DriveApi.File> insertFile(DriveApi.Drive service, String title, String description, String parentId, String mimeType, String fileContents) {
   var completer = new Completer();
 

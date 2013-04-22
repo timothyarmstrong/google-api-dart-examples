@@ -7,7 +7,7 @@ import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Update a file's modified date.
+/// Update a file's modified date.
 void updateModifiedDate(DriveApi.Drive service, String fileId) {
   service.files.touch(fileId)
     .then((_) {

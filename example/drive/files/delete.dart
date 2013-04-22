@@ -7,7 +7,7 @@ import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
 import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
 
-// Permanently delete a file, skipping the trash.
+/// Permanently delete a file, skipping the trash.
 void deleteFile(DriveApi.Drive service, String fileId) {
   service.files.delete(fileId)
     .then((_) {
