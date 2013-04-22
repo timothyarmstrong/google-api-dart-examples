@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as API;
 import 'package:google_oauth2_client/google_oauth2_browser.dart';
 
-void printPermission(API.Drive driveApi, String fileId, String permissionId) {
-  driveApi.permissions.get(fileId, permissionId)
+// START EXAMPLE
+
+import 'package:google_drive_v2_api/drive_v2_api_browser.dart' as DriveApi;
+
+/// Print information about the specified permission.
+void printPermission(DriveApi.Drive service, String fileId, String permissionId) {
+  service.permissions.get(fileId, permissionId)
     .then((permission) {
       print('Name: ${permission.name}');
       print('Role: ${permission.role}');
@@ -20,24 +24,26 @@ void printPermission(API.Drive driveApi, String fileId, String permissionId) {
     });
 }
 
+// END EXAMPLE
+
 void main() {
   var clientId = '938589624680.apps.googleusercontent.com';
-  var scopes = [API.Drive.DRIVE_FILE_SCOPE, API.Drive.DRIVE_SCOPE];
+  var scopes = [DriveApi.Drive.DRIVE_FILE_SCOPE, DriveApi.Drive.DRIVE_SCOPE];
   
   var auth = new GoogleOAuth2(clientId, scopes);
   
-  var driveApi = new API.Drive(auth);
-  driveApi.makeAuthRequests = true;
+  var service = new DriveApi.Drive(auth);
+  service.makeAuthRequests = true;
 
   auth.login().then((Token t) {
-    var l = driveApi.files.list(maxResults: 1, q: 'title = "permissions-test-doc"');
+    var l = service.files.list(maxResults: 1, q: 'title = "permissions-test-doc"');
     l.then((list) {
       var items = list.items;
       if (items.length > 0) {
-        driveApi.permissions.list(items[0].id)
+        service.permissions.list(items[0].id)
           .then((permissionList) {
             for (var p in permissionList.items) {
-              printPermission(driveApi, items[0].id, p.id);
+              printPermission(service, items[0].id, p.id);
             }
           });
       } else {
